@@ -3,8 +3,8 @@ import 'package:focus_detector/focus_detector.dart';
 import 'package:screen_time_tracker/screen_time_tracker.dart';
 
 mixin TimeTracker<T extends StatefulWidget> on State<T> {
-  String? get name;
-  Map<String, dynamic>? get params;
+  String? get name => null;
+  Map<String, dynamic>? get params => null;
   Widget body(BuildContext context);
   Function? get onScreenHideCallback => null;
   Function? get onScreenVisibleCallback => null;
