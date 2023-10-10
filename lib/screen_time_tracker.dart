@@ -1,5 +1,7 @@
 library screen_time_tracker;
 
+import 'local_database.dart';
+
 class ScreenTimeTracker {
   static Future<void> initialize({
     Future<void> Function(String name, Map<String, dynamic>? params)?
@@ -8,6 +10,7 @@ class ScreenTimeTracker {
             String name, Map<String, dynamic>? params, double time)?
         onScreenHideCallback,
   }) async {
+    await LocalDb.init();
     onVisibleCallback = onScreenVisibleCallback;
     onHideCallback = onScreenHideCallback;
   }

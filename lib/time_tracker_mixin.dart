@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
-import 'package:screen_time_tracker/local_database.dart';
-import 'package:screen_time_tracker/screen_time_tracker.dart';
+import 'local_database.dart';
+import 'screen_time_tracker.dart';
 
 mixin TimeTracker<T extends StatefulWidget> on State<T> {
   String? get name => null;
