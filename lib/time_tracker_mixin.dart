@@ -10,6 +10,16 @@ mixin TimeTracker<T extends StatefulWidget> on State<T> {
   Function? get onScreenHideCallback => null;
   Function? get onScreenVisibleCallback => null;
 
+  String getScreenName(String screen) {
+    if (screen.endsWith("State")) {
+      screen.replaceAll("State", "");
+    }
+    if (screen.startsWith("_")) {
+      screen.replaceAll("_", "");
+    }
+    return screen;
+  }
+
   @override
   Widget build(BuildContext context) {
     return FocusDetector(
@@ -21,7 +31,7 @@ mixin TimeTracker<T extends StatefulWidget> on State<T> {
         if (ScreenTimeTracker.onVisibleCallback != null) {
           await LocalDb.saveTime(screen);
           await ScreenTimeTracker.onVisibleCallback!(
-            name ?? runtimeType.toString(),
+            name ?? getScreenName(runtimeType.toString()),
             params,
           );
         }
@@ -34,7 +44,7 @@ mixin TimeTracker<T extends StatefulWidget> on State<T> {
         if (ScreenTimeTracker.onHideCallback != null) {
           final int time = await LocalDb.getTime(screen);
           await ScreenTimeTracker.onHideCallback!(
-            name ?? runtimeType.toString(),
+            name ?? getScreenName(runtimeType.toString()),
             params,
             (DateTime.now().millisecondsSinceEpoch - time) / 1000,
           );
