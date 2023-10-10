@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
+import 'package:screen_time_tracker/local_database.dart';
 import 'package:screen_time_tracker/screen_time_tracker.dart';
 
 mixin TimeTracker<T extends StatefulWidget> on State<T> {
@@ -13,10 +14,12 @@ mixin TimeTracker<T extends StatefulWidget> on State<T> {
   Widget build(BuildContext context) {
     return FocusDetector(
       onFocusGained: () async {
+        final String screen = context.widget.key.toString();
         if (onScreenVisibleCallback != null) {
           await onScreenVisibleCallback!();
         }
         if (ScreenTimeTracker.onVisibleCallback != null) {
+          await LocalDb.saveTime(screen);
           await ScreenTimeTracker.onVisibleCallback!(
             name ?? runtimeType.toString(),
             params,
@@ -24,14 +27,16 @@ mixin TimeTracker<T extends StatefulWidget> on State<T> {
         }
       },
       onFocusLost: () async {
+        final String screen = context.widget.key.toString();
         if (onScreenHideCallback != null) {
           await onScreenHideCallback!();
         }
         if (ScreenTimeTracker.onHideCallback != null) {
+          final int time = await LocalDb.getTime(screen);
           await ScreenTimeTracker.onHideCallback!(
             name ?? runtimeType.toString(),
             params,
-            0,
+            (DateTime.now().millisecondsSinceEpoch - time) / 1000,
           );
         }
       },

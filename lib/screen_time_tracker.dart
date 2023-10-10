@@ -4,7 +4,8 @@ class ScreenTimeTracker {
   static Future<void> initialize({
     Future<void> Function(String name, Map<String, dynamic>? params)?
         onScreenVisibleCallback,
-    Future<void> Function(String name, Map<String, dynamic>? params, int time)?
+    Future<void> Function(
+            String name, Map<String, dynamic>? params, double time)?
         onScreenHideCallback,
   }) async {
     onVisibleCallback = onScreenVisibleCallback;
@@ -14,5 +15,5 @@ class ScreenTimeTracker {
   static Future<void> Function(String name, Map<String, dynamic>? params)?
       onVisibleCallback;
   static Future<void> Function(
-      String name, Map<String, dynamic>? params, int time)? onHideCallback;
+      String name, Map<String, dynamic>? params, double time)? onHideCallback;
 }

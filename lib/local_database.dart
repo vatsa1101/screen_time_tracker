@@ -8,8 +8,9 @@ class LocalDb {
     data = await Hive.openBox("screenTimeData");
   }
 
-  static Future getTime(String name) async {
-    await data!.put(name, DateTime.now().millisecondsSinceEpoch);
+  static Future<int> getTime(String name) async {
+    return (await data!.get(name) as int?) ??
+        DateTime.now().millisecondsSinceEpoch;
   }
 
   static Future saveTime(String name) async {
