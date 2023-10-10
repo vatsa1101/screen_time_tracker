@@ -12,10 +12,10 @@ mixin TimeTracker<T extends StatefulWidget> on State<T> {
 
   String getScreenName(String screen) {
     if (screen.endsWith("State")) {
-      screen.replaceAll("State", "");
+      screen = screen.replaceAll("State", "");
     }
     if (screen.startsWith("_")) {
-      screen.replaceAll("_", "");
+      screen = screen.replaceAll("_", "");
     }
     return screen;
   }
